@@ -53,6 +53,7 @@ export async function POST(req: NextRequest) {
           title: variant || `Recarga R$ ${value},00`,
           quantity: 1,
           unitPrice: Math.round(value * 100),
+          tangible: false,
         },
       ],
       pix: {
