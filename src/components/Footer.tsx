@@ -61,16 +61,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-gray-200 flex justify-center gap-4 grayscale opacity-30">
-          <div className="w-8 h-8 rounded-full bg-gray-300" />
-          <div className="w-8 h-8 rounded-full bg-gray-300" />
-          <div className="w-8 h-8 rounded-full bg-gray-300" />
-        </div>
-        
-        <p className="text-[10px] text-gray-400 text-center mt-6">
-          © 2024 Vivo. Todos os direitos reservados. Telefônica Brasil S.A CNPJ: 02.558.157/0001-62
-        </p>
+
       </div>
     </footer>
   );
