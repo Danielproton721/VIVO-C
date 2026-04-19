@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { RechargeModal } from './RechargeModal';
 
 interface Offer {
   id: number;
@@ -29,9 +30,26 @@ const allOffers: Offer[] = [
 
 export const AmountGrid = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-  
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState<number | null>(null);
+  const [selectedVariant, setSelectedVariant] = useState<string>('');
+
   const initialOffers = allOffers.slice(0, 4);
   const extraOffers = allOffers.slice(4);
+
+  const handleSelectOffer = (offer: Offer) => {
+    const value = Number(offer.price);
+    const bonus = offer.totalInternet && offer.totalInternet !== 'Sem bônus'
+      ? offer.totalInternet
+      : '';
+    const variant = bonus
+      ? `Recarga R$ ${value},00 ${bonus}`
+      : `Recarga R$ ${value},00`;
+
+    setSelectedValue(value);
+    setSelectedVariant(variant);
+    setModalOpen(true);
+  };
 
   return (
     <section className="py-8 bg-white px-4">
@@ -51,7 +69,7 @@ export const AmountGrid = () => {
         {/* Main Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {initialOffers.map((offer) => (
-            <OfferCard key={offer.id} offer={offer} />
+            <OfferCard key={offer.id} offer={offer} onSelect={handleSelectOffer} />
           ))}
         </div>
 
@@ -67,7 +85,7 @@ export const AmountGrid = () => {
               >
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 pt-3">
                   {extraOffers.map((offer) => (
-                    <OfferCard key={offer.id} offer={offer} />
+                    <OfferCard key={offer.id} offer={offer} onSelect={handleSelectOffer} />
                   ))}
                 </div>
               </motion.div>
@@ -86,11 +104,19 @@ export const AmountGrid = () => {
           )}
         </button>
       </div>
+
+      {modalOpen && (
+        <RechargeModal
+          value={selectedValue}
+          variant={selectedVariant}
+          onClose={() => setModalOpen(false)}
+        />
+      )}
     </section>
   );
 };
 
-const OfferCard = ({ offer }: { offer: Offer }) => (
+const OfferCard = ({ offer, onSelect }: { offer: Offer; onSelect: (offer: Offer) => void }) => (
   <motion.div
     whileHover={{ scale: 1.01 }}
     whileTap={{ scale: 0.99 }}
@@ -122,11 +148,15 @@ const OfferCard = ({ offer }: { offer: Offer }) => (
       </ul>
     </div>
     
-    <button className={`w-full py-2.5 mt-4 rounded-full font-bold text-[10px] transition-all relative overflow-hidden group ${
-      offer.isFeatured 
-      ? 'bg-white text-vivo-purple' 
-      : 'bg-vivo-purple text-white'
-    }`}>
+    <button
+      type="button"
+      onClick={() => onSelect(offer)}
+      className={`w-full py-2.5 mt-4 rounded-full font-bold text-[10px] transition-all relative overflow-hidden group ${
+        offer.isFeatured 
+        ? 'bg-white text-vivo-purple' 
+        : 'bg-vivo-purple text-white'
+      }`}
+    >
       <span className="relative z-10">Recarregar</span>
     </button>
   </motion.div>
