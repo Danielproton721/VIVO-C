@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 export const Hero = () => {
   return (
-    <section className="relative w-full aspect-[3/1] md:aspect-[3.5/1] overflow-hidden bg-vivo-purple">
+    <section className="relative w-full aspect-[2/1] md:aspect-[2.5/1] overflow-hidden bg-vivo-purple">
       <motion.img 
         initial={{ opacity: 0, scale: 1.1 }}
         animate={{ opacity: 1, scale: 1 }}
