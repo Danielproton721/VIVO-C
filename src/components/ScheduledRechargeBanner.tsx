@@ -10,13 +10,13 @@ export function ScheduledRechargeBanner() {
 
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#6a0dad] via-[#8b1dbf] to-[#b026d3] shadow-lg">
           {/* Imagem de fundo (homem com celular) */}
-          <div className="absolute inset-y-0 right-0 w-[55%] md:w-[50%]">
+          <div className="pointer-events-none absolute bottom-0 right-0 h-full w-[55%] md:w-[50%]">
             <Image
               src="/banner-recarga-agendada.png"
               alt="Homem segurando celular com tela roxa"
               fill
               sizes="(max-width: 768px) 55vw, 400px"
-              className="object-cover object-left"
+              className="object-contain object-bottom-right"
               priority={false}
             />
           </div>
