@@ -20,13 +20,6 @@ export const Footer = () => {
           </a>
         </div>
 
-        {/* Copyright Text */}
-        <div className="mb-12">
-          <p className="text-[11px] text-gray-500 leading-relaxed">
-            Telefônica Brasil S.A CNPJ: 02.558.157/0001- 62. Copyright 2021 © Vivo. Todos os direitos reservados.
-          </p>
-        </div>
-
         {/* Viva Tudo Section */}
         <div className="bg-white p-6 rounded-2xl mb-12 shadow-sm border border-gray-50">
           <h3 className="text-sm font-bold text-vivo-text mb-2">Viva Tudo</h3>
@@ -61,7 +54,12 @@ export const Footer = () => {
           </div>
         </div>
 
-
+        {/* Copyright Text — rodapé final */}
+        <div className="border-t border-gray-200 pt-6">
+          <p className="text-[11px] text-gray-500 leading-relaxed text-center">
+            Telefônica Brasil S.A CNPJ: 02.558.157/0001- 62. Copyright 2021 © Vivo. Todos os direitos reservados.
+          </p>
+        </div>
       </div>
     </footer>
   );
