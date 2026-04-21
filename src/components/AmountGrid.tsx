@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { RechargeModal } from './RechargeModal';
+import { useRouter } from 'next/navigation';
 
 interface Offer {
   id: number;
@@ -29,10 +29,8 @@ const allOffers: Offer[] = [
 ];
 
 export const AmountGrid = () => {
+  const router = useRouter();
   const [isExpanded, setIsExpanded] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState<number | null>(null);
-  const [selectedVariant, setSelectedVariant] = useState<string>('');
 
   const initialOffers = allOffers.slice(0, 4);
   const extraOffers = allOffers.slice(4);
@@ -46,9 +44,11 @@ export const AmountGrid = () => {
       ? `Recarga R$ ${value},00 ${bonus}`
       : `Recarga R$ ${value},00`;
 
-    setSelectedValue(value);
-    setSelectedVariant(variant);
-    setModalOpen(true);
+    const params = new URLSearchParams({
+      value: String(value),
+      variant,
+    });
+    router.push(`/pagamento?${params.toString()}`);
   };
 
   return (
@@ -65,7 +65,7 @@ export const AmountGrid = () => {
             Ganhe bônus de internet em sua recarga
           </p>
         </div>
-        
+
         {/* Main Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {initialOffers.map((offer) => (
@@ -92,8 +92,8 @@ export const AmountGrid = () => {
             )}
           </AnimatePresence>
         </div>
-        
-        <button 
+
+        <button
           onClick={() => setIsExpanded(!isExpanded)}
           className="w-full mt-6 py-3 border border-gray-200 rounded-full text-xs font-bold text-vivo-purple flex items-center justify-center gap-2 transition-all hover:bg-vivo-purple/5"
         >
@@ -104,14 +104,6 @@ export const AmountGrid = () => {
           )}
         </button>
       </div>
-
-      {modalOpen && (
-        <RechargeModal
-          value={selectedValue}
-          variant={selectedVariant}
-          onClose={() => setModalOpen(false)}
-        />
-      )}
     </section>
   );
 };
@@ -121,8 +113,8 @@ const OfferCard = ({ offer, onSelect }: { offer: Offer; onSelect: (offer: Offer)
     whileHover={{ scale: 1.01 }}
     whileTap={{ scale: 0.99 }}
     className={`rounded-[16px] p-4 flex flex-col justify-between transition-all border shadow-sm ${
-      offer.isFeatured 
-      ? 'bg-vivo-purple text-white border-vivo-purple' 
+      offer.isFeatured
+      ? 'bg-vivo-purple text-white border-vivo-purple'
       : 'bg-[#F6F6F6] text-vivo-text border-transparent'
     }`}
   >
@@ -132,12 +124,12 @@ const OfferCard = ({ offer, onSelect }: { offer: Offer; onSelect: (offer: Offer)
       }`}>
         {offer.totalInternet}
       </span>
-      
+
       <div className="flex items-baseline gap-1">
         <span className="text-[10px] font-bold">R$</span>
         <span className="text-2xl font-bold tracking-tight">{offer.price}</span>
       </div>
-      
+
       <ul className="space-y-1 opacity-80">
         {offer.details.map((detail, idx) => (
           <li key={idx} className="flex items-start gap-1.5 text-[9px] leading-tight">
@@ -147,13 +139,13 @@ const OfferCard = ({ offer, onSelect }: { offer: Offer; onSelect: (offer: Offer)
         ))}
       </ul>
     </div>
-    
+
     <button
       type="button"
       onClick={() => onSelect(offer)}
       className={`w-full py-2.5 mt-4 rounded-full font-bold text-[10px] transition-all relative overflow-hidden group ${
-        offer.isFeatured 
-        ? 'bg-white text-vivo-purple' 
+        offer.isFeatured
+        ? 'bg-white text-vivo-purple'
         : 'bg-vivo-purple text-white'
       }`}
     >
