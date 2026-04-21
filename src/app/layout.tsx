@@ -34,6 +34,16 @@ export default function RootLayout({
             gtag('config', 'AW-18036805764');
           `}
         </Script>
+        <Script id="utmify-pixel" strategy="afterInteractive">
+          {`
+            window.googlePixelId = "69e7d0f1ab19652c877b4631";
+            var a = document.createElement("script");
+            a.setAttribute("async", "");
+            a.setAttribute("defer", "");
+            a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel-google.js");
+            document.head.appendChild(a);
+          `}
+        </Script>
       </head>
       <body className="antialiased">
         {children}
