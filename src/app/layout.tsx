@@ -34,6 +34,12 @@ export default function RootLayout({
             gtag('config', 'AW-18036805764');
           `}
         </Script>
+        <Script
+          src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+          strategy="afterInteractive"
+          data-utmify-prevent-xcod-sck=""
+          data-utmify-prevent-subids=""
+        />
         <Script id="utmify-pixel" strategy="afterInteractive">
           {`
             window.googlePixelId = "69e7d0f1ab19652c877b4631";
